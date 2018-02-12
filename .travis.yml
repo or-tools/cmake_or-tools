@@ -1,0 +1,35 @@
+sudo: required
+language: cpp
+matrix:
+  include:
+    - os: linux
+      dist: trusty
+      compiler: clang
+    - os: linux
+      dist: trusty
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-6
+      compiler: g++-6
+    - os: osx
+      compiler: clang
+    - os: osx
+      compiler: gcc
+
+before_install:
+  - eval "${MATRIX_EVAL}"
+  - if [ $TRAVIS_OS_NAME == linux ]; then sudo apt-get -qq update; fi
+
+  - if [ $TRAVIS_OS_NAME == osx ]; then sudo chown -R $(whoami) /usr/local; fi
+    # work around https://github.com/travis-ci/travis-ci/issues/8552
+  - if [ $TRAVIS_OS_NAME == osx ]; then brew update; fi
+
+
+script:
+  - cmake --version
+  - cmake -H. -Bbuild -DCMAKE_VERBOSE_MAKEFILE=ON
+  - cmake --build build --target all
+  - cmake --build build --target test
