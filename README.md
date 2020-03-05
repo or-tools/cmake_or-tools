@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/Mizux/cmake-ortools.svg?branch=master)](https://travis-ci.org/Mizux/cmake-ortools)
+[![Build Status](https://travis-ci.com/Mizux/cmake-ortools.svg?branch=master)](https://travis-ci.com/Mizux/cmake-ortools)
 [![Build status](https://ci.appveyor.com/api/projects/status/5t6i2y4jbhqdxyd6/branch/master?svg=true)](https://ci.appveyor.com/project/Mizux/cmake-ortools/branch/master)
 
 # Introduction
