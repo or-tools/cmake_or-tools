@@ -2,8 +2,18 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/5t6i2y4jbhqdxyd6/branch/master?svg=true)](https://ci.appveyor.com/project/Mizux/cmake-ortools/branch/master)
 
 # Introduction
-This is an integration test of ORTools in a Modern [CMake](https://cmake.org/) C++ Project using
- [ExternalProject](https://cmake.org/cmake/help/latest/module/ExternalProject.html) module.
+<nav for="integration"> |
+<a href="#external-project">ExternalProject</a> |
+<a href="#fetch-content">FetchContent</a> |
+<a href="#local-install">LocalInstall</a> |
+</nav>
+
+This is an integration test of ORTools in a Modern [CMake](https://cmake.org/) C++ Project.
+
+You basically have three ways to integrate C++ OR-Tools in your CMake project:
+* The usual way, install OR-Tools then use [`find_package()`](https://cmake.org/cmake/help/latest/command/find_package.html) it.
+* Using the [ExternalProject](https://cmake.org/cmake/help/latest/module/ExternalProject.html) module.
+* Using the [FetchContent](https://cmake.org/cmake/help/latest/module/FetchContent.html) module.
 
 This project should run on Linux, Mac and Windows.
 
@@ -11,53 +21,38 @@ This project should run on Linux, Mac and Windows.
 This CMake project is composed of one executable (FooApp) and one library (Foo)
 with the following dependencies:  
 ```
-ortools: Gflags Glog ZLIB Protobuf Cbc
-Foo: ortools
-FooApp: ortools
+ortools: PUBLIC Gflags Glog ZLIB Protobuf Cbc
+Foo: PRIVATE ortools
+FooApp: PRIVATE ortools
 ```
 
 ## Project directory layout
 Thus the project layout is as follow:
 ```
- CMakeLists.txt // meta CMake doing the orchestration.
- cmake
- ├── CMakeLists.txt
- ├── ortools.CMakeLists.txt
- Foo
- ├── CMakeLists.txt
- ├── main.cpp
- FooApp
- ├── CMakeLists.txt
- └── src
-     └── main.cpp
+<Method>
+├── CMakeLists.txt
+├── cmake
+│   └── utils.cmake
+├── Foo
+│   ├── CMakeLists.txt
+│   ├── include
+│   │   └── foo
+│   │       └── Foo.hpp
+│   └── src
+│       └── Foo.cpp
+└── FooApp
+    ├── CMakeLists.txt
+    └── src
+        └── main.cpp
 ```
 
 # C++ Project Build
 To build the C++ project, as usual:
 ```sh
-cmake -H. -Bbuild -DCMAKE_VERBOSE_MAKEFILE=ON
-cmake --build build
+cd <Method>
+cmake -S. -Bbuild
+cmake --build build -v
 ```
-
-# Docker testing
-To test CMake Install rules and build, there is a Makefile in cmake folder using
-docker to test.
-
-For example to test the Cmake project on ubuntu:
-```sh
-make -f cmake/Makefile test_install_ubuntu
-```
-
-note: to get help you can use
-```sh
-make -f cmake/Makefile help
-```
-
-# Contributing
-The [CONTRIBUTING.md](./CONTRIBUTING.md) file contains instructions on how to
-file the Contributor License Agreement before sending any pull requests (PRs).
-Of course, if you're new to the project, it's usually best to discuss any
-proposals and reach consensus before sending your first PR.
 
 # License
 Apache 2. See the LICENSE file for details.
