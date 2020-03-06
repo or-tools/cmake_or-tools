@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.8.2)
+cmake_minimum_required(VERSION 3.14.7)
 
 if(POLICY CMP0022)
 	cmake_policy(SET CMP0022 NEW)
@@ -13,7 +13,7 @@ endif()
 set(CMAKE_BUILD_TYPE "Release" CACHE STRING
 	"Choose the type of build, options are: Debug Release RelWithDebInfo MinSizeRel.")
 
-project(meta VERSION 1.0 LANGUAGES NONE)
+project(CMakeORTools VERSION 1.0 LANGUAGES CXX)
 
 include(CTest)
 include(GNUInstallDirs)
@@ -32,22 +32,22 @@ add_subdirectory(Foo)
 add_subdirectory(FooApp)
 
 # Install
-install(EXPORT CMakeORToolsTargets
-	NAMESPACE CMakeORTools::
-	DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/CMakeORTools
+install(EXPORT ${PROJECT_NAME}Targets
+	NAMESPACE ${PROJECT_NAME}::
+  DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}
 	COMPONENT Devel)
 include(CMakePackageConfigHelpers)
-configure_package_config_file(cmake/CMakeORToolsConfig.cmake.in
-	"${PROJECT_BINARY_DIR}/CMakeORToolsConfig.cmake"
-	INSTALL_DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/CMakeORTools"
+configure_package_config_file(cmake/${PROJECT_NAME}Config.cmake.in
+	"${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
+	INSTALL_DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}"
 	NO_SET_AND_CHECK_MACRO
   NO_CHECK_REQUIRED_COMPONENTS_MACRO)
 write_basic_package_version_file(
-	"${PROJECT_BINARY_DIR}/CMakeORToolsConfigVersion.cmake"
+	"${PROJECT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake"
 	COMPATIBILITY SameMajorVersion)
 install(
 	FILES
-	"${PROJECT_BINARY_DIR}/CMakeORToolsConfig.cmake"
-	"${PROJECT_BINARY_DIR}/CMakeORToolsConfigVersion.cmake"
-	DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/CMakeORTools"
+	"${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
+	"${PROJECT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake"
+	DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}"
 	COMPONENT Devel)
