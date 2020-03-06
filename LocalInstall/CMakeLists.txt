@@ -30,7 +30,7 @@ if(BUILD_SHARED_LIBS)
 endif()
 
 list(APPEND CMAKE_PREFIX_PATH install)
-find_package(ortools)
+find_package(ortools REQUIRED)
 
 add_subdirectory(Foo)
 add_subdirectory(FooApp)
