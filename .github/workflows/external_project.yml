@@ -1,0 +1,71 @@
+name: External Project
+
+on:
+  push:
+  pull_request:
+  schedule:
+    # min hours day(month) month day(week)
+    - cron: '0 0 */5 * *'
+
+jobs:
+  # Building using the github runner environement directly.
+  linux_make:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Check cmake
+      run: cmake --version
+    - name: Configure
+      run: cd ExternalProject && cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release
+    - name: Build
+      run: cd ExternalProject && cmake --build build --target all -v
+    - name: Test
+      run: cd ExternalProject && cmake --build build --target test -v
+    - name: Install
+      run: cd ExternalProject && cmake --build build --target install -v -- DESTDIR=install
+
+  # Building using the github runner environement directly.
+  macos_xcode:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Check cmake
+      run: cmake --version
+    - name: Configure
+      run: cd ExternalProject && cmake -S. -Bbuild -G "Xcode" -DCMAKE_CONFIGURATION_TYPES=Release
+    - name: Build
+      run: cd ExternalProject && cmake --build build --config Release --target ALL_BUILD -v
+    - name: Test
+      run: cd ExternalProject && cmake --build build --config Release --target RUN_TESTS -v
+    - name: Install
+      run: cd ExternalProject && cmake --build build --config Release --target install -v
+  macos_make:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Check cmake
+      run: cmake --version
+    - name: Configure
+      run: cd ExternalProject && cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release
+    - name: Build
+      run: cd ExternalProject && cmake --build build --target all -v
+    - name: Test
+      run: cd ExternalProject && cmake --build build --target test -v
+    - name: Install
+      run: cd ExternalProject && cmake --build build --target install -v
+
+  # Building using the github runner environement directly.
+  windows_msvc:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Check cmake
+      run: cmake --version
+    - name: Configure
+      run: cd ExternalProject && cmake -S. -Bbuild -G "Visual Studio 16 2019" -DCMAKE_CONFIGURATION_TYPES=Release
+    - name: Build
+      run: cd ExternalProject && cmake --build build --config Release --target ALL_BUILD -- /maxcpucount
+    - name: Test
+      run: cd ExternalProject && cmake --build build --config Release --target RUN_TESTS -- /maxcpucount
+    - name: Install
+      run: cd ExternalProject && cmake --build build --config Release --target INSTALL -- /maxcpucount
