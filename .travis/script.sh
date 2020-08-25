@@ -5,7 +5,10 @@ cd "${METHOD}"
 
 if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
   /usr/bin/x86_64-linux-gnu-ld --version
-  export PATH=/usr/local/bin:$PATH
+  export PATH="/usr/local/bin:$PATH"
+fi
+if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+  export PATH="/usr/local/opt/ccache/libexec:$PATH"
 fi
 
 cmake --version
