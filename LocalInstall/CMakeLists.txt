@@ -1,14 +1,5 @@
 cmake_minimum_required(VERSION 3.14.7)
 
-if(POLICY CMP0022)
-	cmake_policy(SET CMP0022 NEW)
-endif()
-
-# option() honors normal variables.
-if(POLICY CMP0077)
-	cmake_policy(SET CMP0077 NEW)
-endif()
-
 # Set default build type to Release if empty.
 set(CMAKE_BUILD_TYPE "Release" CACHE STRING
 	"Choose the type of build, options are: Debug Release RelWithDebInfo MinSizeRel.")
