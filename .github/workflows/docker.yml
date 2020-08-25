@@ -1,0 +1,27 @@
+name: Docker
+
+on: [push, pull_request]
+  schedule:
+    # min hours day(month) month day(week)
+    - cron: '0 0 */5 * *'
+jobs:
+  Distros:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        distro: [alpine, archlinux, centos, debian, fedora, opensuse, ubuntu]
+        method: [FetchContent, ExternalProject, LocalInstall]
+      fail-fast: false
+    env:
+      DISTRO: ${{ matrix.distro }}
+      METHOD: ${{ matrix.method }}
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build env image
+      run: make --directory=${METHOD}/ci ${DISTRO}_env
+    - name: Build devel project
+      run: make --directory=${METHOD}/ci ${DISTRO}_devel
+    - name: Build project
+      run: make --directory=${METHOD}/ci ${DISTRO}_build
+    - name: Test project
+      run: make --directory=${METHOD}/ci ${DISTRO}_test
