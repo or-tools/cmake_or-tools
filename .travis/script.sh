@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-set -x
-set -e
+set -euxo pipefail
 
 cd "${METHOD}"
 
@@ -11,7 +10,7 @@ fi
 
 cmake --version
 cmake -S. -Bbuild
-cmake --build build --target all -- VERBOSE=1
-cmake --build build --target test
+cmake --build build -v --target all
+cmake --build build -v --target test
 
 # vim: set tw=0 ts=2 sw=2 expandtab:
