@@ -62,7 +62,9 @@ jobs:
     - name: Check cmake
       run: cmake --version
     - name: Configure
-      run: cd LocalInstall && cmake -S. -Bbuild -G "Visual Studio 16 2019" -DCMAKE_CONFIGURATION_TYPES=Release
+      run: |
+        git config --system core.longpaths true
+        cd LocalInstall && cmake -S. -Bbuild -G "Visual Studio 16 2019" -DCMAKE_CONFIGURATION_TYPES=Release
     - name: Build
       run: cd LocalInstall && cmake --build build --config Release --target ALL_BUILD -- /maxcpucount
     - name: Test
