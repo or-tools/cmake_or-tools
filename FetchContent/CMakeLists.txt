@@ -37,6 +37,8 @@ FetchContent_Declare(
 )
 
 set(BUILD_DEPS ON)
+set(BUILD_SAMPLES OFF)
+set(BUILD_EXAMPLES OFF)
 FetchContent_MakeAvailable(ortools)
 
 add_subdirectory(Foo)
