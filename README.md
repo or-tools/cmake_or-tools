@@ -1,6 +1,7 @@
-[![Docker](https://github.com/Mizux/cmake-ortools/workflows/Docker/badge.svg?branch=master)](https://github.com/Mizux/cmake-ortools/actions?query=workflow%3ADocker)
-[![Build Status](https://travis-ci.com/Mizux/cmake-ortools.svg?branch=master)](https://travis-ci.com/Mizux/cmake-ortools)
-[![Build status](https://ci.appveyor.com/api/projects/status/5t6i2y4jbhqdxyd6/branch/master?svg=true)](https://ci.appveyor.com/project/Mizux/cmake-ortools/branch/master)
+[![Docker](https://github.com/or-tools/cmake_or-tools/actions/workflows/docker.yml/badge.svg)](https://github.com/or-tools/cmake_or-tools/actions/workflows/docker.yml)
+[![External Project](https://github.com/or-tools/cmake_or-tools/actions/workflows/external_project.yml/badge.svg)](https://github.com/or-tools/cmake_or-tools/actions/workflows/external_project.yml)
+[![Fetch Content](https://github.com/or-tools/cmake_or-tools/actions/workflows/fetch_content.yml/badge.svg)](https://github.com/or-tools/cmake_or-tools/actions/workflows/fetch_content.yml)
+[![Local Install](https://github.com/or-tools/cmake_or-tools/actions/workflows/local_install.yml/badge.svg)](https://github.com/or-tools/cmake_or-tools/actions/workflows/local_install.yml)
 
 # Introduction
 <nav for="integration"> |
