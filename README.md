@@ -4,9 +4,9 @@
 
 # Introduction
 <nav for="integration"> |
-<a href="#external-project">ExternalProject</a> |
-<a href="#fetch-content">FetchContent</a> |
-<a href="#local-install">LocalInstall</a> |
+<a href="ExternalProject">ExternalProject</a> |
+<a href="FetchContent">FetchContent</a> |
+<a href="LocalInstall">LocalInstall</a> |
 </nav>
 
 This is an integration test of ORTools in a Modern [CMake](https://cmake.org/) C++ Project.
