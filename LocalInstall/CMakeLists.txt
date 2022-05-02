@@ -29,14 +29,14 @@ configure_file(
 	${CMAKE_CURRENT_SOURCE_DIR}/cmake/ortools.CMakeLists.txt
 	${CMAKE_BINARY_DIR}/ortools-download/CMakeLists.txt)
 # CMake configure
-execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
+execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" . -DCMAKE_BUILD_TYPE=Release
   RESULT_VARIABLE result
   WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/ortools-download)
 if(result)
   message(FATAL_ERROR "CMake step for ortools failed: ${result}")
 endif()
 # CMake Build/Install
-execute_process(COMMAND ${CMAKE_COMMAND} --build .
+execute_process(COMMAND ${CMAKE_COMMAND} --build . --config Release
   RESULT_VARIABLE result
   WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/ortools-download)
 if(result)
