@@ -9,7 +9,7 @@ project(ortools-download NONE)
 include(ExternalProject)
 ExternalProject_Add(ortools_project
 	GIT_REPOSITORY https://github.com/google/or-tools
-	GIT_TAG "master"
+	GIT_TAG "main"
 	SOURCE_DIR "${CMAKE_BINARY_DIR}/ortools-src"
 	BINARY_DIR "${CMAKE_BINARY_DIR}/ortools-build"
 	UPDATE_COMMAND ""
