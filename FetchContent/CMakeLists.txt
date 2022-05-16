@@ -33,7 +33,7 @@ include(FetchContent)
 FetchContent_Declare(
   ortools
   GIT_REPOSITORY https://github.com/google/or-tools.git
-  GIT_TAG        master
+  GIT_TAG        main
 )
 
 set(BUILD_DEPS ON)
