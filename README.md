@@ -1,25 +1,30 @@
-[![Docker](https://github.com/or-tools/cmake_or-tools/actions/workflows/docker.yml/badge.svg)](https://github.com/or-tools/cmake_or-tools/actions/workflows/docker.yml)
-[![External Project](https://github.com/or-tools/cmake_or-tools/actions/workflows/external_project.yml/badge.svg)](https://github.com/or-tools/cmake_or-tools/actions/workflows/external_project.yml)
-[![Fetch Content](https://github.com/or-tools/cmake_or-tools/actions/workflows/fetch_content.yml/badge.svg)](https://github.com/or-tools/cmake_or-tools/actions/workflows/fetch_content.yml)
-[![Local Install](https://github.com/or-tools/cmake_or-tools/actions/workflows/local_install.yml/badge.svg)](https://github.com/or-tools/cmake_or-tools/actions/workflows/local_install.yml)
+Github-CI:<br>
+[![Build Status][github_linux_status]][github_linux_link]
+[![Build Status][github_macos_status]][github_macos_link]
+[![Build Status][github_windows_status]][github_windows_link]
+
+[![Build Status][github_amd64_docker_status]][github_amd64_docker_link]
+
+[github_linux_status]: ./../../actions/workflows/amd64_linux.yml/badge.svg
+[github_linux_link]: ./../../actions/workflows/amd64_linux.yml
+[github_macos_status]: ./../../actions/workflows/amd64_macos.yml/badge.svg
+[github_macos_link]: ./../../actions/workflows/amd64_macos.yml
+[github_windows_status]: ./../../actions/workflows/amd64_windows.yml/badge.svg
+[github_windows_link]: ./../../actions/workflows/amd64_windows.yml
+
+[github_amd64_docker_status]: ./../../actions/workflows/amd64_docker.yml/badge.svg
+[github_amd64_docker_link]: ./../../actions/workflows/amd64_docker.yml
 
 # Introduction
-<nav for="integration"> |
-<a href="ExternalProject">ExternalProject</a> |
-<a href="FetchContent">FetchContent</a> |
-<a href="LocalInstall">LocalInstall</a> |
-</nav>
 
-This is an integration test of ORTools in a Modern [CMake](https://cmake.org/) C++ Project.
-
-You basically have three ways to integrate C++ OR-Tools in your CMake project:
-* The usual way, install OR-Tools then use [`find_package()`](https://cmake.org/cmake/help/latest/command/find_package.html) it.
-* Using the [ExternalProject](https://cmake.org/cmake/help/latest/module/ExternalProject.html) module.
-* Using the [FetchContent](https://cmake.org/cmake/help/latest/module/FetchContent.html) module.
+This is an integration test of ORTools in a Modern [CMake](https://cmake.org/)
+C++ Project using the [FetchContent](https://cmake.org/cmake/help/latest/module/FetchContent.html)
+module.
 
 This project should run on Linux, Mac and Windows.
 
 # CMake Dependencies Tree
+
 This CMake project is composed of one executable (FooApp) and one library (Foo)
 with the following dependencies:  
 ```
@@ -29,6 +34,7 @@ FooApp: PRIVATE ortools
 ```
 
 ## Project directory layout
+
 Thus the project layout is as follow:
 ```
 <Method>
@@ -49,16 +55,18 @@ Thus the project layout is as follow:
 ```
 
 # C++ Project Build
+
 To build the C++ project, as usual:
 ```sh
-cd <Method>
 cmake -S. -Bbuild
 cmake --build build -v
 ```
 
 # License
+
 Apache 2. See the LICENSE file for details.
 
 # Disclaimer
+
 This is not an official Google product, it is just code that happens to be
 owned by Google.
