@@ -1,7 +1,7 @@
 # ref: https://github.com/docker-library/official-images
 name: amd64 Docker
 
-on: [push, pull_request]
+on: [push, pull_request, workflow_dispatch]
 
 jobs:
   Distros:
@@ -13,7 +13,7 @@ jobs:
     env:
       DISTRO: amd64_${{ matrix.distro }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Check docker
         run: |
           docker info
