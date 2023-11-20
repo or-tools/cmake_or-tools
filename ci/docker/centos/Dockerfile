@@ -10,11 +10,21 @@ RUN dnf -y update \
 && dnf clean all \
 && rm -rf /var/cache/dnf
 
-# Install CMake 3.26.4
-RUN wget -q "https://cmake.org/files/v3.26/cmake-3.26.4-linux-x86_64.sh" \
-&& chmod a+x cmake-3.26.4-linux-x86_64.sh \
-&& ./cmake-3.26.4-linux-x86_64.sh --prefix=/usr/local/ --skip-license \
-&& rm cmake-3.26.4-linux-x86_64.sh
+# Install system build dependencies
+ENV PATH=/usr/local/bin:$PATH
+RUN dnf -y update \
+&& dnf -y install gcc-toolset-11 \
+&& dnf clean all \
+&& rm -rf /var/cache/dnf
+
+RUN echo "source /opt/rh/gcc-toolset-11/enable" >> /etc/bashrc
+SHELL ["/bin/bash", "--login", "-c"]
+
+# Install CMake 3.27.8
+RUN wget -q "https://cmake.org/files/v3.27/cmake-3.27.8-linux-x86_64.sh" \
+&& chmod a+x cmake-3.27.8-linux-x86_64.sh \
+&& ./cmake-3.27.8-linux-x86_64.sh --prefix=/usr/local/ --skip-license \
+&& rm cmake-3.27.8-linux-x86_64.sh
 CMD [ "/usr/bin/bash" ]
 
 FROM env AS devel
@@ -23,7 +33,7 @@ COPY . .
 
 FROM devel AS build
 RUN cmake -version
-RUN cmake -H. -Bbuild
+RUN cmake -S. -Bbuild
 RUN cmake --build build --target all
 RUN cmake --build build --target install
 
