@@ -33,8 +33,7 @@ include(FetchContent)
 FetchContent_Declare(
   ortools
   GIT_REPOSITORY https://github.com/google/or-tools.git
-  GIT_TAG        main
-)
+  GIT_TAG        v9.9)
 set(BUILD_DEPS ON)
 set(BUILD_DOC OFF)
 set(BUILD_SAMPLES OFF)
