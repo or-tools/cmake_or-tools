@@ -4,10 +4,74 @@ cmake_minimum_required(VERSION 3.18)
 set(CMAKE_BUILD_TYPE "Release" CACHE STRING
   "Choose the type of build, options are: Debug Release RelWithDebInfo MinSizeRel.")
 
-project(CMakeORTools VERSION 1.0 LANGUAGES CXX)
+project(BasicExample VERSION 1.0 LANGUAGES CXX)
+message(STATUS "${PROJECT_NAME} version: ${PROJECT_VERSION}")
+#message(STATUS "major: ${PROJECT_VERSION_MAJOR}")
+#message(STATUS "minor: ${PROJECT_VERSION_MINOR}")
+#message(STATUS "patch: ${PROJECT_VERSION_PATCH}")
 
-include(CTest)
+if(MSVC)
+  set(CMAKE_CXX_STANDARD 20)
+else()
+  set(CMAKE_CXX_STANDARD 17)
+endif()
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+# Set max os target version.
+set(CMAKE_OSX_DEPLOYMENT_TARGET 10.15)
+
+# Default Build Type to be Release
+get_property(isMultiConfig GLOBAL PROPERTY GENERATOR_IS_MULTI_CONFIG)
+if(isMultiConfig)
+  if(NOT CMAKE_CONFIGURATION_TYPES)
+    set(CMAKE_CONFIGURATION_TYPES "Release;Debug" CACHE STRING
+    "Choose the type of builds, options are: Debug Release RelWithDebInfo MinSizeRel. (default: Release;Debug)"
+    FORCE)
+  endif()
+  message(STATUS "Configuration types: ${CMAKE_CONFIGURATION_TYPES}")
+else()
+  if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE "Release" CACHE STRING
+    "Choose the type of build, options are: Debug Release RelWithDebInfo MinSizeRel. (default: Release)"
+    FORCE)
+  endif()
+  message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
+endif()
+
+# Layout build dir like install dir
 include(GNUInstallDirs)
+if(UNIX)
+  option(BUILD_SHARED_LIBS "Build shared libraries (.so or .dylib)." ON)
+  set(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE)
+  set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR})
+  set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR})
+  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR})
+  # for multi-config build system (e.g. Xcode, Ninja Multi-Config)
+  foreach(OUTPUTCONFIG IN LISTS CMAKE_CONFIGURATION_TYPES)
+    string(TOUPPER ${OUTPUTCONFIG} OUTPUTCONFIG)
+    set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${CMAKE_BINARY_DIR}/${OUTPUTCONFIG}/${CMAKE_INSTALL_LIBDIR})
+    set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${CMAKE_BINARY_DIR}/${OUTPUTCONFIG}/${CMAKE_INSTALL_LIBDIR})
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${CMAKE_BINARY_DIR}/${OUTPUTCONFIG}/${CMAKE_INSTALL_BINDIR})
+  endforeach()
+else()
+  # Currently Only support static build for windows
+  option(BUILD_SHARED_LIBS "Build shared libraries (.dll)." OFF)
+  set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR})
+  set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR})
+  set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR})
+  # for multi-config builds (e.g. msvc)
+  foreach(OUTPUTCONFIG IN LISTS CMAKE_CONFIGURATION_TYPES)
+    string(TOUPPER ${OUTPUTCONFIG} OUTPUTCONFIG)
+    set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${CMAKE_BINARY_DIR}/${OUTPUTCONFIG}/${CMAKE_INSTALL_BINDIR})
+    set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${CMAKE_BINARY_DIR}/${OUTPUTCONFIG}/${CMAKE_INSTALL_BINDIR})
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${CMAKE_BINARY_DIR}/${OUTPUTCONFIG}/${CMAKE_INSTALL_BINDIR})
+  endforeach()
+endif()
+
+if(MSVC AND BUILD_SHARED_LIBS)
+  set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+endif()
 
 if(UNIX)
   option(BUILD_SHARED_LIBS "Build shared libraries(.so)." ON)
@@ -31,8 +95,12 @@ set(BUILD_SAMPLES OFF)
 set(BUILD_EXAMPLES OFF)
 FetchContent_MakeAvailable(ortools)
 
-add_subdirectory(Foo)
-add_subdirectory(FooApp)
+# Disable CTest targets
+set_property(GLOBAL PROPERTY CTEST_TARGETS_ADDED 1)
+include(CTest)
+include(GNUInstallDirs)
+
+add_subdirectory(BasicExample)
 
 # Install
 install(EXPORT ${PROJECT_NAME}Targets
