@@ -14,8 +14,8 @@
 // [START program]
 // Minimal example to call the GLOP solver.
 // [START import]
+#include <cstdlib>
 #include <memory>
-#include <ostream>
 
 #include "absl/flags/flag.h"
 #include "absl/log/flags.h"
@@ -33,7 +33,7 @@ void BasicExample() {
   // Create the linear solver with the GLOP backend.
   std::unique_ptr<MPSolver> solver(MPSolver::CreateSolver("GLOP"));
   if (!solver) {
-    LOG(WARNING) << "GLOP solver unavailable.";
+    LOG(WARNING) << "Could not create solver GLOP";
     return;
   }
   // [END solver]
@@ -79,7 +79,7 @@ void BasicExample() {
     } else {
       LOG(WARNING) << "The solver could not solve the problem.";
       return;
-}
+    }
   }
 
   LOG(INFO) << "Solution:";
