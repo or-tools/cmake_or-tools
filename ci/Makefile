@@ -41,11 +41,13 @@ help:
 	@echo -e "\t\t${BOLD}s390x${RESET}: linux/s390x (IBM System/390x)"
 	@echo
 	@echo -e "\tWith ${BOLD}<distro>${RESET}:"
+	@echo -e "\t\t${BOLD}almalinux${RESET} (latest)"
 	@echo -e "\t\t${BOLD}alpine${RESET} (edge)"
 	@echo -e "\t\t${BOLD}archlinux${RESET} (latest)"
 	@echo -e "\t\t${BOLD}debian${RESET} (latest)"
 	@echo -e "\t\t${BOLD}fedora${RESET} (latest)"
 	@echo -e "\t\t${BOLD}opensuse${RESET} (tumbleweed)"
+	@echo -e "\t\t${BOLD}rockylinux${RESET} (9)"
 	@echo -e "\t\t${BOLD}ubuntu${RESET} (rolling)"
 	@echo
 	@echo -e "\tWith ${BOLD}<stage>${RESET}:"
@@ -97,7 +99,7 @@ endif
 DOCKER_RUN_CMD := docker run --rm --init --net=host
 
 # Currently supported distro
-DISTROS := alpine archlinux debian fedora opensuse ubuntu
+DISTROS := almalinux alpine archlinux debian fedora opensuse rockylinux ubuntu
 
 # $* stem
 # $< first prerequist
