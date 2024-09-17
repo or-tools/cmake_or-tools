@@ -88,9 +88,10 @@ include(FetchContent)
 FetchContent_Declare(
   ortools
   GIT_REPOSITORY https://github.com/google/or-tools.git
-  GIT_TAG        v9.10)
+  GIT_TAG        v9.11)
 set(BUILD_DEPS ON)
 set(BUILD_DOC OFF)
+set(BUILD_FLATZINC OFF)
 set(BUILD_SAMPLES OFF)
 set(BUILD_EXAMPLES OFF)
 FetchContent_MakeAvailable(ortools)
