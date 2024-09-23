@@ -1,5 +1,5 @@
 # ref: https://github.com/actions/runner-images
-name: amd64 MacOS
+name: arm64 MacOS
 
 on: [push, pull_request, workflow_dispatch]
 
@@ -14,7 +14,7 @@ jobs:
         ]
       fail-fast: false
     name: MacOS • CMake • ${{ matrix.cmake.generator }}
-    runs-on: macos-13 # latest intel based macos runner
+    runs-on: macos-latest # arm64 based macos runner
     steps:
       - uses: actions/checkout@v4
       - name: Check CMake
