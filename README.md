@@ -27,35 +27,17 @@ module.
 
 This project should run on Linux, Mac and Windows.
 
-# CMake Dependencies Tree
-
-This CMake project is composed of one executable (FooApp) and one library (Foo)
-with the following dependencies:  
-```
-ortools: PUBLIC ZLIB abseil-cpp Protobuf re2 Cbc SCIP
-Foo: PRIVATE ortools
-FooApp: PRIVATE ortools
-```
-
 ## Project directory layout
 
 Thus the project layout is as follow:
 ```
-<Method>
-├── CMakeLists.txt
-├── cmake
-│   └── utils.cmake
-├── Foo
-│   ├── CMakeLists.txt
-│   ├── include
-│   │   └── foo
-│   │       └── Foo.hpp
-│   └── src
-│       └── Foo.cpp
-└── FooApp
-    ├── CMakeLists.txt
-    └── src
-        └── main.cpp
+├─ BasicExample
+│  ├─ CMakeLists.txt
+│  └─ src
+│     └─ basic_example.cc
+├─ cmake
+│  └─ BasicExampleConfig.cmake.in
+└─ CMakeLists.txt
 ```
 
 # C++ Project Build
@@ -63,7 +45,7 @@ Thus the project layout is as follow:
 To build the C++ project, as usual:
 ```sh
 cmake -S. -Bbuild
-cmake --build build -v
+cmake --build build --config Release -v
 ```
 
 # License
