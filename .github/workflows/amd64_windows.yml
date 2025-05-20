@@ -3,16 +3,20 @@ name: amd64 Windows
 
 on: [push, pull_request, workflow_dispatch]
 
+concurrency:
+  group: ${{github.workflow}}-${{github.ref}}
+  cancel-in-progress: true
+
 # Building using the github runner environement directly.
 jobs:
   native:
     strategy:
       matrix:
         cmake: [
-          {generator: "Visual Studio 17 2022", config: Release, build_target: ALL_BUILD, test_target: RUN_TESTS, install_target: INSTALL},
+          {name: "VS2022", generator: "Visual Studio 17 2022", config: Release, build_target: ALL_BUILD, test_target: RUN_TESTS, install_target: INSTALL},
         ]
       fail-fast: false
-    name: Windows • CMake • ${{ matrix.cmake.generator }}
+    name: Windows•CMake(${{matrix.cmake.name}})
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
@@ -23,24 +27,24 @@ jobs:
       - name: Configure
         run: >
           cmake -S. -Bbuild
-          -G "${{ matrix.cmake.generator }}"
-          -DCMAKE_CONFIGURATION_TYPES=${{ matrix.cmake.config }}
+          -G "${{matrix.cmake.generator}}"
+          -DCMAKE_CONFIGURATION_TYPES=${{matrix.cmake.config}}
           -DCMAKE_INSTALL_PREFIX=install
       - name: Build
         run: >
           cmake --build build
-          --config ${{ matrix.cmake.config }}
-          --target ${{ matrix.cmake.build_target }}
+          --config ${{matrix.cmake.config}}
+          --target ${{matrix.cmake.build_target}}
           -v -j2
       - name: Test
         run: >
           cmake --build build
-          --config ${{ matrix.cmake.config }}
-          --target ${{ matrix.cmake.test_target }}
+          --config ${{matrix.cmake.config}}
+          --target ${{matrix.cmake.test_target}}
           -v
       - name: Install
         run: >
           cmake --build build
-          --config ${{ matrix.cmake.config }}
-          --target ${{ matrix.cmake.install_target }}
+          --config ${{matrix.cmake.config}}
+          --target ${{matrix.cmake.install_target}}
           -v
