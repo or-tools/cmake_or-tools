@@ -18,9 +18,9 @@ help:
 	@echo -e "\t${BOLD}help${RESET}: display this help and exit."
 	@echo
 	@echo -e "\tBuild using docker buildx with a platform specified."
-	@echo -e "\t${BOLD}<platform>_<stage>${RESET}: build <stage> docker images for ALL DISTROS."
+	@echo -e "\t${BOLD}<platform>_all_<stage>${RESET}: build <stage> docker images for ALL DISTROS."
 	@echo -e "\t${BOLD}<platform>_<distro>_<stage>${RESET}: build <stage> docker image for a specific distro."
-	@echo -e "\t${BOLD}save_<platform>_<stage>${RESET}: Save <stage> docker images for ALL DISTROS."
+	@echo -e "\t${BOLD}save_<platform>_all_<stage>${RESET}: Save <stage> docker images for ALL DISTROS."
 	@echo -e "\t${BOLD}save_<platform>_<distro>_<stage>${RESET}: Save the <stage> docker image for a specific distro."
 	@echo -e "\t${BOLD}sh_<platform>_<distro>_<stage>${RESET}: run a container using the <stage> docker image specified (debug purpose)."
 	@echo -e "\t${BOLD}clean_<platform>_<distro>_<stage>${RESET}: Remove cache and docker image."
@@ -98,9 +98,6 @@ DOCKER_BUILDX_CMD := ${DOCKER_BUILDX_CMD} --progress=plain
 endif
 DOCKER_RUN_CMD := docker run --rm --init --net=host
 
-# Currently supported distro
-DISTROS := almalinux alpine archlinux debian fedora opensuse rockylinux ubuntu
-
 # $* stem
 # $< first prerequist
 # $@ target name
@@ -114,6 +111,9 @@ PLATFORMS := \
  ppc64 ppc64le \
  riscv64 \
  s390x
+
+# Currently supported distro
+DISTROS := almalinux alpine archlinux debian fedora opensuse rockylinux ubuntu
 
 STAGES = env devel build test
 
