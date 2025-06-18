@@ -54,8 +54,8 @@ if(UNIX)
     set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${CMAKE_BINARY_DIR}/${OutputConfig}/${CMAKE_INSTALL_BINDIR})
   endforeach()
 else()
-  # Currently Only support static build for windows
-  option(BUILD_SHARED_LIBS "Build shared libraries (.dll)." OFF)
+  option(BUILD_SHARED_LIBS "Build shared libraries (.dll)." ON)
+  set(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE)
   set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR})
   set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR})
   set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR})
@@ -72,13 +72,6 @@ if(MSVC AND BUILD_SHARED_LIBS)
   set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 endif()
 
-if(UNIX)
-  option(BUILD_SHARED_LIBS "Build shared libraries(.so)." ON)
-else()
-  # only support for static build on Windows.
-  set(BUILD_SHARED_LIBS OFF)
-endif()
-
 if(BUILD_SHARED_LIBS)
   set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 endif()
@@ -87,7 +80,7 @@ include(FetchContent)
 FetchContent_Declare(
   ortools
   GIT_REPOSITORY https://github.com/google/or-tools.git
-  GIT_TAG        v9.11)
+  GIT_TAG        v9.12)
 set(BUILD_DEPS ON)
 set(BUILD_DOC OFF)
 set(BUILD_FLATZINC OFF)
