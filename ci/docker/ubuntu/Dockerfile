@@ -4,8 +4,9 @@ FROM ubuntu:rolling AS env
 
 # Install system build dependencies
 ENV PATH=/usr/local/bin:$PATH
-RUN apt-get update -qq \
-&& apt-get install -yq git wget libssl-dev build-essential cmake \
+RUN apt-get update -q \
+&& apt-get install -yq \
+ git wget libssl-dev build-essential cmake \
 && apt-get clean \
 && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 CMD [ "/bin/sh" ]
