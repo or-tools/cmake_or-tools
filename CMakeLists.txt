@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.24)
+cmake_minimum_required(VERSION 3.25)
 
 # Enable output of compile commands during generation.
 option(CMAKE_EXPORT_COMPILE_COMMANDS "Export compile command" ON)
@@ -67,26 +67,32 @@ else()
     set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${CMAKE_BINARY_DIR}/${OutputConfig}/${CMAKE_INSTALL_BINDIR})
   endforeach()
 endif()
-
-if(MSVC AND BUILD_SHARED_LIBS)
-  set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
-endif()
+message(STATUS "Build shared libs: ${BUILD_SHARED_LIBS}")
 
 if(BUILD_SHARED_LIBS)
   set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+  if(MSVC)
+    set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+  endif()
 endif()
 
-include(FetchContent)
-FetchContent_Declare(
-  ortools
-  GIT_REPOSITORY https://github.com/google/or-tools.git
-  GIT_TAG        v9.12)
-set(BUILD_DEPS ON)
-set(BUILD_DOC OFF)
-set(BUILD_FLATZINC OFF)
-set(BUILD_SAMPLES OFF)
-set(BUILD_EXAMPLES OFF)
-FetchContent_MakeAvailable(ortools)
+block()
+  include(FetchContent)
+  set(FETCHCONTENT_QUIET OFF)
+  set(FETCHCONTENT_UPDATES_DISCONNECTED ON)
+  FetchContent_Declare(
+    ortools
+    GIT_REPOSITORY https://github.com/google/or-tools.git
+    GIT_TAG "v9.12"
+    GIT_SHALLOW TRUE
+  )
+  set(BUILD_DEPS ON)
+  set(BUILD_FLATZINC OFF)
+  set(BUILD_SAMPLES OFF)
+  set(BUILD_EXAMPLES OFF)
+  set(BUILD_DOC OFF)
+  FetchContent_MakeAvailable(ortools)
+endblock()
 
 # Disable CTest targets
 set_property(GLOBAL PROPERTY CTEST_TARGETS_ADDED 1)
