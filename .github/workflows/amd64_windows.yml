@@ -21,7 +21,7 @@ jobs:
     env:
       CTEST_OUTPUT_ON_FAILURE: 1
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Check CMake
         run: |
           cmake --version
@@ -55,4 +55,4 @@ jobs:
     runs-on: ubuntu-latest
     needs: native
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
