@@ -83,7 +83,7 @@ block()
   FetchContent_Declare(
     ortools
     GIT_REPOSITORY https://github.com/google/or-tools.git
-    GIT_TAG "v9.12"
+    GIT_TAG "v9.13"
     GIT_SHALLOW TRUE
   )
   set(BUILD_DEPS ON)
