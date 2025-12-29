@@ -9,7 +9,7 @@ RUN apt-get update -qq \
  git wget libssl-dev build-essential cmake \
 && apt-get clean \
 && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-CMD [ "/bin/sh" ]
+CMD [ "/bin/bash" ]
 
 FROM env AS devel
 WORKDIR /home/project
