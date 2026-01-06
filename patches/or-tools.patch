@@ -1,0 +1,19 @@
+diff --git a/patches/soplex-v7.1.3.patch b/patches/soplex-v7.1.3.patch
+index 06b629ec9..ce421fd88 100644
+--- a/patches/soplex-v7.1.3.patch
++++ b/patches/soplex-v7.1.3.patch
+@@ -1,7 +1,13 @@
+ diff --git a/CMakeLists.txt b/CMakeLists.txt
+-index 0b21f5a..ddf1536 100644
++index 0b21f5a..3c7424a 100644
+ --- a/CMakeLists.txt
+ +++ b/CMakeLists.txt
++@@ -1,4 +1,4 @@
++-cmake_minimum_required(VERSION 3.9)
+++cmake_minimum_required(VERSION 3.25)
++ 
++ set(CMAKE_C_FLAGS_RELWITHDEBINFO "${CMAKE_C_FLAGS_DEBUG} ${CMAKE_C_FLAGS_RELEASE}")
++ set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_DEBUG} ${CMAKE_CXX_FLAGS_RELEASE}")
+ @@ -27,6 +27,10 @@ set(CPACK_PACKAGE_VERSION_PATCH "${SOPLEX_VERSION_PATCH}")
+  set(CPACK_PACKAGE_VENDOR "Zuse Institute Berlin")
+  include(CPack)
