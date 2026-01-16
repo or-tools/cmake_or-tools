@@ -83,11 +83,11 @@ block()
   FetchContent_Declare(
     ortools
     GIT_REPOSITORY https://github.com/google/or-tools.git
-    GIT_TAG "v9.14"
+    GIT_TAG "v9.15"
     GIT_SHALLOW TRUE
-    UPDATE_COMMAND git reset --hard
-    PATCH_COMMAND git apply --ignore-whitespace
-    "${CMAKE_CURRENT_LIST_DIR}/patches/or-tools.patch"
+    #UPDATE_COMMAND git reset --hard
+    #PATCH_COMMAND git apply --ignore-whitespace
+    #"${CMAKE_CURRENT_LIST_DIR}/patches/or-tools.patch"
   )
   set(BUILD_DEPS ON)
   set(BUILD_TESTING OFF)
